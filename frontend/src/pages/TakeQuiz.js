@@ -19,44 +19,23 @@ const TakeQuiz = () => {
   const [quizFinished, setQuizFinished] = useState(false);
 
   /* ================= FETCH QUIZZES ================= */
+
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
         const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/quizzes`,
+          `${process.env.REACT_APP_API_URL}/api/quizzes`
         );
-        setQuizzes(res.data.reverse()); // newest first
+        setQuizzes(res.data.reverse());
       } catch (err) {
         console.error(err);
       }
     };
+
     fetchQuizzes();
   }, []);
 
-  /* ================= TIMER ================= */
-  useEffect(() => {
-    if (!selectedQuiz || quizFinished) return;
-
-    if (timeLeft === 0) {
-      handleNext();
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [timeLeft, selectedQuiz, quizFinished]);
-
-  /* Reset timer & restore selection */
-  useEffect(() => {
-    if (!selectedQuiz || quizFinished) return;
-    setTimeLeft(QUESTION_TIME);
-    setSelectedOption(answers[currentIndex] || null);
-  }, [currentIndex, selectedQuiz, quizFinished]);
-
-  /* ================= HELPERS ================= */
+  /* ================= SAVE ANSWER ================= */
 
   const saveAnswer = () => {
     setAnswers((prev) => {
@@ -65,6 +44,69 @@ const TakeQuiz = () => {
       return updated;
     });
   };
+
+  /* ================= FINISH QUIZ ================= */
+
+  const handleFinish = () => {
+    const finalAnswers = [...answers];
+    finalAnswers[currentIndex] = selectedOption;
+
+    let score = 0;
+
+    selectedQuiz.questions.forEach((q, i) => {
+      if (finalAnswers[i] === q.correctAnswer) score++;
+    });
+
+    const resultData = {
+      selectedQuiz,
+      score,
+      answers: finalAnswers,
+      totalTime: `${selectedQuiz.questions.length * QUESTION_TIME}s`,
+    };
+
+    sessionStorage.setItem("quizResult", JSON.stringify(resultData));
+
+    setQuizFinished(true);
+    navigate("/result");
+  };
+
+  /* ================= TIMER ================= */
+
+  useEffect(() => {
+    if (!selectedQuiz || quizFinished) return;
+
+    if (timeLeft === 0) {
+      saveAnswer();
+
+      if (currentIndex < selectedQuiz.questions.length - 1) {
+        setCurrentIndex((prev) => prev + 1);
+      } else {
+        handleFinish();
+      }
+
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [timeLeft, selectedQuiz, quizFinished, currentIndex]);
+
+  /* ================= RESET TIMER & RESTORE ANSWER ================= */
+
+  useEffect(() => {
+    if (!selectedQuiz || quizFinished) return;
+
+    setTimeLeft(QUESTION_TIME);
+
+    setSelectedOption(() => {
+      return answers[currentIndex] || null;
+    });
+  }, [currentIndex, selectedQuiz, quizFinished, answers]);
+
+  /* ================= BUTTON HANDLERS ================= */
 
   const handleNext = () => {
     saveAnswer();
@@ -78,33 +120,10 @@ const TakeQuiz = () => {
 
   const handlePrevious = () => {
     saveAnswer();
+
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
     }
-  };
-
-  /* ================= FINISH QUIZ ================= */
-  const handleFinish = () => {
-    const finalAnswers = [...answers];
-    finalAnswers[currentIndex] = selectedOption;
-
-    let score = 0;
-    selectedQuiz.questions.forEach((q, i) => {
-      if (finalAnswers[i] === q.correctAnswer) score++;
-    });
-
-    const resultData = {
-      selectedQuiz,
-      score,
-      answers: finalAnswers,
-      totalTime: `${selectedQuiz.questions.length * QUESTION_TIME}s`,
-    };
-
-    // ✅ THIS WAS MISSING (CRITICAL FIX)
-    sessionStorage.setItem("quizResult", JSON.stringify(resultData));
-
-    setQuizFinished(true);
-    navigate("/result");
   };
 
   const selectQuiz = (quiz) => {
@@ -121,7 +140,8 @@ const TakeQuiz = () => {
     setTimeLeft(QUESTION_TIME);
   };
 
-  /* ================= QUIZ LIST ================= */
+  /* ================= QUIZ LIST UI ================= */
+
   if (!selectedQuiz) {
     return (
       <>
@@ -140,7 +160,7 @@ const TakeQuiz = () => {
               Available Quizzes
             </h2>
 
-            {/* CREATE QUIZ */}
+            {/* CREATE QUIZ CARD */}
             <div
               className="card mb-4 text-center"
               style={{
@@ -212,7 +232,8 @@ const TakeQuiz = () => {
     );
   }
 
-  /* ================= QUIZ QUESTIONS ================= */
+  /* ================= QUIZ QUESTION UI ================= */
+
   const question = selectedQuiz.questions[currentIndex];
 
   return (
@@ -245,6 +266,7 @@ const TakeQuiz = () => {
               style={{ width: `${(timeLeft / QUESTION_TIME) * 100}%` }}
             />
           </div>
+
           <p className="text-end text-secondary">Time left: {timeLeft}s</p>
 
           <h6 className="mb-3">{question.question}</h6>
