@@ -1,66 +1,74 @@
-# 🎯 Quizora – Full Stack Quiz Website
+Quizora – Quiz Website
 
-Quizora is a full-stack quiz platform where users can register, create quizzes, attempt quizzes, and view detailed results.  
-The project is built with a modern **MERN stack** and focuses on clean UI, smooth UX, and proper error handling.
+Project Overview  
+Quizora is a full-stack quiz web application designed to allow users to create, attempt, and analyze quizzes in an interactive and user-friendly environment. The project focuses on a clean dark-themed user interface, smooth quiz flow, and reliable functionality across all features. Users can register, log in, create quizzes with multiple questions, take quizzes with a timer-based system, and view detailed result analytics. The application is built using modern web technologies and follows a scalable frontend-backend architecture.
 
----
+Getting Started  
+You can run and edit this project locally using your preferred development environment.
 
-## 🚀 Features
+Prerequisites  
+Node.js  
+npm  
+MongoDB Atlas account  
 
-### 👤 Authentication
-- User Registration & Login
-- JWT-based authentication
-- Protected routes for quiz creation
+Running the Project Locally  
+Follow the steps below to set up the project:
 
-### 📝 Quiz Management
-- Create quizzes with multiple questions
-- Add multiple options and correct answers
-- Edit and delete quizzes
-- Auto-save quiz drafts (local storage)
+# Clone the repository  
+git clone https://github.com/Manalinarkhede/CODSOFT-QUIZ-Website.git  
 
-### 🎮 Take Quiz
-- One-question-at-a-time flow
-- Timer for each question
-- Next / Previous navigation
-- Answer review before submission
+# Navigate to the project directory  
+cd CODSOFT-QUIZ-Website  
 
-### 📊 Results & Analytics
-- Final score & accuracy
-- Correct / Incorrect / Skipped breakdown
-- Donut & bar chart visualizations
-- Responsive result dashboard
-- Mobile-friendly UI
+# Install backend dependencies  
+cd backend  
+npm install  
 
-### 🎨 UI & UX
-- Dark theme with subtle gradients
-- Fully responsive (mobile-first)
-- Smooth transitions
-- Error handling for all edge cases
+# Create backend environment variables  
+Create a .env file in the backend folder and add:  
+MONGO_URI=your_mongodb_atlas_connection_string  
+JWT_SECRET=your_jwt_secret  
+PORT=5000  
 
----
+# Start the backend server  
+npm start  
 
-## 🛠 Tech Stack
+# Install frontend dependencies  
+cd ../frontend  
+npm install  
 
-### Frontend
-- React
-- Bootstrap
-- Axios
-- React Router
-- Chart-free visual analytics (CSS-based)
+# Create frontend environment variables  
+Create a .env file in the frontend folder and add:  
+REACT_APP_API_URL=http://localhost:5000  
 
-### Backend
-- Node.js
-- Express.js
-- MongoDB Atlas
-- Mongoose
-- JWT Authentication
+# Start the frontend development server  
+npm start  
 
-### Deployment
-- Frontend: **Vercel**
-- Backend: **Render**
-- Database: **MongoDB Atlas**
+The frontend will run on http://localhost:3000  
+The backend will run on http://localhost:5000  
 
----
+Features  
+User registration and login with JWT authentication  
+Create, edit, and delete quizzes  
+Add multiple questions and answer options  
+One-question-at-a-time quiz flow with timer  
+Automatic handling of skipped questions  
+Result dashboard with score and accuracy analytics  
+Fully responsive dark-themed user interface  
 
+Tech Stack  
+Frontend: React, Bootstrap, Axios, React Router  
+Backend: Node.js, Express.js, MongoDB Atlas, Mongoose  
+Authentication: JSON Web Tokens (JWT)  
 
+Deployment  
+Frontend is deployed on Vercel  
+Backend is deployed on Render  
+Database is hosted on MongoDB Atlas  
 
+Author  
+Manali Narkhede  
+GitHub: https://github.com/Manalinarkhede  
+
+License  
+This project is created for learning and educational purposes.
