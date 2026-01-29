@@ -1,22 +1,22 @@
-Quizora – Quiz Website
+# Quizora – Quiz Website
 
-Project Overview  
+## Project Overview
 Quizora is a full-stack quiz web application designed to allow users to create, attempt, and analyze quizzes in an interactive and user-friendly environment. The project focuses on a clean dark-themed user interface, smooth quiz flow, and reliable functionality across all features. Users can register, log in, create quizzes with multiple questions, take quizzes with a timer-based system, and view detailed result analytics. The application is built using modern web technologies and follows a scalable frontend-backend architecture.
 
-Getting Started  
+## Getting Started
 You can run and edit this project locally using your preferred development environment.
 
-Prerequisites  
-Node.js  
-npm  
-MongoDB Atlas account  
+## Prerequisites
+- Node.js  
+- npm  
+- MongoDB Atlas account  
 
-Running the Project Locally  
+## Running the Project Locally
 Follow the steps below to set up the project:
 
-# Clone the repository  
-git clone https://github.com/Manalinarkhede/CODSOFT-QUIZ-Website.git  
-
+### Clone the repository
+```bash
+git clone https://github.com/Manalinarkhede/CODSOFT-QUIZ-Website.git
 # Navigate to the project directory  
 cd CODSOFT-QUIZ-Website  
 
@@ -47,7 +47,7 @@ npm start
 The frontend will run on http://localhost:3000  
 The backend will run on http://localhost:5000  
 
-Features  
+## Features  
 User registration and login with JWT authentication  
 Create, edit, and delete quizzes  
 Add multiple questions and answer options  
@@ -56,12 +56,12 @@ Automatic handling of skipped questions
 Result dashboard with score and accuracy analytics  
 Fully responsive dark-themed user interface  
 
-Tech Stack  
+## Tech Stack  
 Frontend: React, Bootstrap, Axios, React Router  
 Backend: Node.js, Express.js, MongoDB Atlas, Mongoose  
 Authentication: JSON Web Tokens (JWT)  
 
-Deployment  
+## Deployment  
 Frontend is deployed on Vercel  
 Backend is deployed on Render  
 Database is hosted on MongoDB Atlas  
