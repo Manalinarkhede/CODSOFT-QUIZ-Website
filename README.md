@@ -15,7 +15,6 @@ You can run and edit this project locally using your preferred development envir
 Follow the steps below to set up the project:
 
 ### Clone the repository
-```bash
 git clone https://github.com/Manalinarkhede/CODSOFT-QUIZ-Website.git
 # Navigate to the project directory  
 cd CODSOFT-QUIZ-Website  
